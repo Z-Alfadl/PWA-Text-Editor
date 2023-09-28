@@ -26,10 +26,10 @@ warmStrategyCache({
 
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-// TODO: Implement asset caching
+// Caches style, script and worker files
 registerRoute(
   ({request}) => ['style', 'script', 'worker'].includes(request.destination),
-  
+  //When the browser makes a request, uses cached assets if available, falling back to network otherwise. Also updates cached assets based on network response
   new StaleWhileRevalidate({
     cacheName: 'asset-cache',
     plugins: [

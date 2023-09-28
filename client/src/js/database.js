@@ -1,5 +1,5 @@
 import { openDB } from 'idb';
-
+//initialize the database
 const initdb = async () =>
   openDB('jate', 1, {
     upgrade(db) {
@@ -12,18 +12,19 @@ const initdb = async () =>
     },
   });
 
-// TODO: Add logic to a method that accepts some content and adds it to the database
+//Function to update an IDB entry
 export const putDb = async (content) => {
   console.log('Put request');
   const textDb = await openDB('jate', 1);
   const tx = textDb.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
+  //put creates a new entry if one doesnt exist with a value of content. If the entry already exists, it gets updated.
   const request = store.put({id: 1 , value: content});
   const result = await request;
   console.log("data saved to database", result)
 }
 
-// TODO: Add logic for a method that gets all the content from the database
+//Function to get all entries in the database
 export const getDb = async () => {
   console.log('Get Request');
   const textDb = await openDB('jate', 1);
